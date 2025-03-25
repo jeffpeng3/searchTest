@@ -1,18 +1,35 @@
 <body>123123123123123</body>
 <script>
-var query = decodeURIComponent(location.search.split("=")[1]);
-fetch("https://raw.githubusercontent.com/Its-MyPic/Its-MyPicDB/refs/heads/json/data.json")
-  .then(function (response) {
-    var s = response.json()
-    .then(function (data) {
-      var result = data.filter(function (item) {
-        return item.text.includes(query);
-      });
-      document.body.textContent = (JSON.stringify(result));
-      console.log("done");
-    })
-  });
+// var query = decodeURIComponent(location.search.split("=")[1]);
+// fetch("https://raw.githubusercontent.com/Its-MyPic/Its-MyPicDB/refs/heads/json/data.json")
+//   .then(function (response) {
+//     var s = response.json()
+//     .then(function (data) {
+//       var result = data.filter(function (item) {
+//         return item.text.includes(query);
+//       });
+//       document.body.textContent = (JSON.stringify(result));
+//       console.log("done");
+//     })
+//   });
 onload = function () {
   console.log("Search for: " + query);
 };
+
+var query = decodeURIComponent(location.search.split("=")[1]);
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "https://raw.githubusercontent.com/Its-MyPic/Its-MyPicDB/refs/heads/json/data.json", false); // 第三個參數 false 代表同步
+console.log("done");
+xhr.send();
+
+if (xhr.status === 200) {
+  var data = JSON.parse(xhr.responseText);
+  var result = data.filter(function (item) {
+    return item.text.includes(query);
+  });
+  document.body.textContent = JSON.stringify(result);
+} else {
+  document.body.textContent = "請求失敗";
+}
+
 </script>
