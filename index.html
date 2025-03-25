@@ -1,0 +1,18 @@
+<body></body>
+<script>
+var query = decodeURIComponent(location.search.split("=")[1]);
+fetch("https://raw.githubusercontent.com/Its-MyPic/Its-MyPicDB/refs/heads/json/data.json")
+  .then(function (response) {
+    var s = response.json()
+    .then(function (data) {
+      var result = data.filter(function (item) {
+        return item.text.includes(query);
+      });
+      document.body.textContent = (JSON.stringify(result));
+      console.log("done");
+    })
+  });
+onload = function () {
+  console.log("Search for: " + query);
+};
+</script>
